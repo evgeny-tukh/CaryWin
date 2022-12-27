@@ -39,6 +39,7 @@ LRESULT Cary::WinClass::wndProc (HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
         if (msg == WM_CREATE) {
             if (!windowPoll.empty ()) {
                 if (windowPoll.back ()->onCreate.has_value ()) {
+                    windowPoll.back ()->wnd = wnd;
                     windowPoll.back ()->onCreate.value () (wnd, msg, wParam, lParam);
                 }
             }
@@ -65,7 +66,8 @@ LRESULT Cary::WinClass::wndProc (HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
 }
 
 bool Cary::WinClass::registerCls () {
-    return RegisterClassA (&cls);
+    auto atom = RegisterClassA (&cls);
+    return (bool) atom;
 }
 
 void Cary::WinClass::setBg (COLORREF clr) {

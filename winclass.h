@@ -38,6 +38,9 @@ namespace Cary {
             bool registerCls ();
 
             HWND createWnd (WinDef *winDef, std::function<void (Window *)> beforeCreate = [] (Window *) {}, HWND parent = HWND_DESKTOP);
+            HWND createWnd (WinDef *winDef, HWND parent) {
+                return createWnd (winDef, [] (Window *) {}, parent);
+            }
 
         private:
             WNDCLASS cls;
