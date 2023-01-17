@@ -62,6 +62,11 @@ LRESULT Cary::WinClass::wndProc (HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
     result = msgProcessor (WM_SIZE, wndInstPos->second->onSize);
     if (result.has_value ()) return result.value ();
 
+    for (auto userMsg: wndInstPos->second->userMsgHandlers) {
+        std::optional<MsgCb> cb = userMsg.second;
+        result = msgProcessor (userMsg.first, cb);
+    }
+
     return DefWindowProc (wnd, msg, wParam, lParam);
 }
 

@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <optional>
 #include <functional>
+#include <unordered_map>
 
 #include "common.h"
 #include "windef.h"
@@ -15,6 +16,11 @@ namespace Cary {
         class WinClass *cls;
         WinDef winDef;
         std::optional<MsgCb> onCreate, onDestroy, onCommand, onSysCommand, onPaint, onMove, onSize;
+        std::unordered_map<uint32_t, MsgCb> userMsgHandlers;
+
+        void addUserMsgHandler (uint32_t msg, MsgCb cb) {
+            userMsgHandlers.emplace (std::pair<uint32_t, MsgCb> (msg, cb));
+        }
 
         Window (WinDef *_winDef);
 
