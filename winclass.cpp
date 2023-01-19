@@ -61,6 +61,8 @@ LRESULT Cary::WinClass::wndProc (HWND wnd, UINT msg, WPARAM wParam, LPARAM lPara
     if (result.has_value ()) return result.value ();
     result = msgProcessor (WM_SIZE, wndInstPos->second->onSize);
     if (result.has_value ()) return result.value ();
+    result = msgProcessor (WM_TIMER, wndInstPos->second->onTimer);
+    if (result.has_value ()) return result.value ();
 
     for (auto userMsg: wndInstPos->second->userMsgHandlers) {
         std::optional<MsgCb> cb = userMsg.second;

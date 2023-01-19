@@ -15,7 +15,7 @@ namespace Cary {
         HWND wnd;
         class WinClass *cls;
         WinDef winDef;
-        std::optional<MsgCb> onCreate, onDestroy, onCommand, onSysCommand, onPaint, onMove, onSize;
+        std::optional<MsgCb> onCreate, onDestroy, onCommand, onSysCommand, onPaint, onMove, onSize, onTimer;
         std::unordered_map<uint32_t, MsgCb> userMsgHandlers;
 
         void addUserMsgHandler (uint32_t msg, MsgCb cb) {
